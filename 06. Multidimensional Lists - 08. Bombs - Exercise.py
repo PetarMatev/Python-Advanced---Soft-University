@@ -1,17 +1,18 @@
-# 07. Snake Moves:
-r, c = [int(i) for i in input().split()]
-matrix = [[0 for i in range(c)] for j in range(r)]
-snake = input()
+# 08. Bombs:
+matrix = [[int(n) for n in input().split()] for _ in range(int(input()))]
+bombs_coordinates = [[int(n) for n in c.split(",")] for c in input().split()]
+for bomb in bombs_coordinates:
+    row, col = bomb
+    if matrix[row][col] > 0:
+        strength = matrix[row][col]
+        for r in range(row - 1, row + 2):
+            for c in range(col - 1, col + 2):
+                if r in range(len(matrix)) and c in range(len(matrix[r])) and matrix[r][c] > 0:
+                    matrix[r][c] -= strength
 
-current_index = 0
-for row in range(r):
-    for column in range(c):
-        if row % 2 != 0:
-            matrix[row][c - 1 - column] = snake[current_index]
-        else:
-            matrix[row][column] = snake[current_index]
-        current_index += 1
-        if current_index == len(snake):
-            current_index = 0
+alive_cells = [matrix[r][c] for r in range(len(matrix)) for c in range(len(matrix[r])) if matrix[r][c] > 0]
 
-[print("".join(list(map(str, current_row)))) for current_row in matrix]
+print(f"Alive cells: {len(alive_cells)}\n"
+      f"Sum: {sum(alive_cells)}")
+
+[print(' '.join([str(n) for n in matrix[r]])) for r in range(len(matrix))]

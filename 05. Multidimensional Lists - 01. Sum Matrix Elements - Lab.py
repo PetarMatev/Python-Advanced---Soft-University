@@ -1,23 +1,10 @@
-# 06. Battle of Names:
-num = int(input())
-odd_set = set()
-even_set = set()
+# 01. Sum Matrix Elements:
 
-for i in range(1, num + 1):
-    outcome = sum([ord(i) for i in input()]) // i
-    if outcome % 2 == 0:
-        even_set.add(outcome)
-    else:
-        odd_set.add(outcome)
+rows, columns = [int(i) for i in input().split(", ")]
+matrix = []
+for row in range(rows):
+    line = [int(x) for x in input().split(", ")]
+    matrix.append(line)
 
-if sum(odd_set) == sum(even_set):
-    print(", ".join([str(i) for i in (odd_set | even_set)]))
-
-if sum(odd_set) > sum(even_set):
-    print(", ".join([str(i) for i in (odd_set - even_set)]))
-
-if sum(odd_set) < sum(even_set):
-    print(", ".join([str(i) for i in (odd_set ^ even_set)]))
-
-
-
+print(sum(list(map(sum, matrix))))
+print(matrix)

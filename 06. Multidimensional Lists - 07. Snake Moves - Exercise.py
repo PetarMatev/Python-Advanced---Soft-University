@@ -1,18 +1,17 @@
-# 06. Matrix Shuffling:
+# 07. Snake Moves:
 r, c = [int(i) for i in input().split()]
-mtx = [[i for i in input().split()] for i in range(r)]
+matrix = [[0 for i in range(c)] for j in range(r)]
+snake = input()
 
-while True:
-    command = input()
-    if command == "END":
-        break
-    if "swap" not in command or len(command.split()) != 5:
-        print(f"Invalid input!")
-    else:
-        n = [int(i) for i in command.split()[1:]]
-        num_list = [item for item in n if item < 0 or item > len(mtx)]
-        if len(num_list) > 0:
-            print(f"Invalid input!")
+current_index = 0
+for row in range(r):
+    for column in range(c):
+        if row % 2 != 0:
+            matrix[row][c - 1 - column] = snake[current_index]
         else:
-            mtx[n[0]][n[1]], mtx[n[2]][n[3]] = mtx[n[2]][n[3]], mtx[n[0]][n[1]]
-            [print(*i) for i in mtx]
+            matrix[row][column] = snake[current_index]
+        current_index += 1
+        if current_index == len(snake):
+            current_index = 0
+
+[print("".join(list(map(str, current_row)))) for current_row in matrix]

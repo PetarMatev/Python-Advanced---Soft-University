@@ -1,10 +1,15 @@
-# 02. Even Matrix:
+# 03. Flattening Matrix:
 
 rows = int(input())
 matrix = []
 
 for row in range(rows):
-    line = [int(x) for x in input().split(", ") if int(x) % 2 == 0]
+    line = [int(i) for i in input().split(", ")]
     matrix.append(line)
 
-print(matrix)
+flattened = []
+for item in matrix:
+    for element in item:
+        flattened.append(element)
+
+print(flattened)

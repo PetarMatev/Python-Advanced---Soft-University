@@ -1,17 +1,15 @@
-# 04. Sum Matrix Columns:
+# 05. Primary Diagonal:
 
-rows, columns = [int(i) for i in input().split(", ")]
-matrix = []
+size = int(input())
+matrix = [[0] * size for row in range(0, size)]
 
-for row in range(rows):
-    line = [int(i) for i in input().split()]
-    matrix.append(line)
+for x in range(0, size):
+    line = list(map(int, input().split()))
+    for y in range(0, size):
+        matrix[x][y] = line[y]
 
-for el in range(columns):
-    sum_matrix_column = 0
-    for ek in range(rows):
-        item_in_a_column = matrix[ek][el]
-        sum_matrix_column += item_in_a_column
-    print(sum_matrix_column)
-
+sum_diagonal = 0
+for i in range(size):
+    sum_diagonal += matrix[size - i - 1][size - i - 1]
+print(sum_diagonal)
 

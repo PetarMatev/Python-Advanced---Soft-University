@@ -1,10 +1,10 @@
-# 01. Sum Matrix Elements:
+# 02. Even Matrix:
 
-rows, columns = [int(i) for i in input().split(", ")]
+rows = int(input())
 matrix = []
+
 for row in range(rows):
-    line = [int(x) for x in input().split(", ")]
+    line = [int(x) for x in input().split(", ") if int(x) % 2 == 0]
     matrix.append(line)
 
-print(sum(list(map(sum, matrix))))
 print(matrix)

@@ -1,17 +1,130 @@
-# 08. Bombs:
-matrix = [[int(n) for n in input().split()] for _ in range(int(input()))]
-bombs_coordinates = [[int(n) for n in c.split(",")] for c in input().split()]
-for bomb in bombs_coordinates:
-    row, col = bomb
-    if matrix[row][col] > 0:
-        strength = matrix[row][col]
-        for r in range(row - 1, row + 2):
-            for c in range(col - 1, col + 2):
-                if r in range(len(matrix)) and c in range(len(matrix[r])) and matrix[r][c] > 0:
-                    matrix[r][c] -= strength
+# 09. Miner:
+rows = int(input())  # the size of a square field in which the miner should move
+possible_moves = [i for i in input().split()]  # the commands for the miner's movement
+matrix = [[j for j in input().split()] for _ in range(rows)]
+columns = len(matrix[0])
 
-alive_cells = [matrix[r][c] for r in range(len(matrix)) for c in range(len(matrix[r])) if matrix[r][c] > 0]
-print(f"Alive cells: {len(alive_cells)}\n"
-      f"Sum: {sum(alive_cells)}")
+column = len(matrix[0])
+miner = []
+total_coal = len([matrix[r][c] for r in range(len(matrix)) for c in range(len(matrix[r])) if matrix[r][c] == "c"])
+collected_coal = 0
+Game_Over = False
 
-[print(' '.join([str(n) for n in matrix[r]])) for r in range(len(matrix))]
+
+def miner_location(rows, columns):
+    for r in range(rows):
+        for c in range(columns):
+            if matrix[r][c] == "s":
+                miner.append(r)
+                miner.append(c)
+                break
+        else:
+            continue
+        break
+
+
+def move_up(matrix, miner):
+    ps1, ps2 = miner[0], miner[1]
+    try:
+        if 0 <= ps1 - 1 < len(matrix):
+            return True
+    except (IndexError):
+        return False
+
+
+def move_down(matrix, miner):
+    ps1, ps2 = miner[0], miner[1]
+    try:
+        if 0 <= ps1 + 1 < len(matrix):
+            return True
+    except (IndexError):
+        return False
+
+
+def move_left(matrix, miner):
+    ps1, ps2 = miner[0], miner[1]
+    try:
+        if 0 <= ps2 - 1 < len(matrix[ps1]):
+            return True
+    except (IndexError):
+        return False
+
+
+def move_right(matrix, miner):
+    ps1, ps2 = miner[0], miner[1]
+    try:
+        z = len(matrix[ps1])
+        if 0 <= ps2 + 1 < len(matrix[ps1]):
+            return True
+    except (IndexError):
+        return False
+
+
+miner_location(rows, columns)
+
+for move in possible_moves:
+
+    if move == "up":
+        if move_up(matrix, miner):
+            miner = [int(miner[0] - 1), int(miner[1])]
+            ps1, ps2 = miner[0], miner[1]
+            if matrix[ps1][ps2] == "c":
+                collected_coal += 1
+                matrix[ps1][ps2] = "*"
+                if collected_coal == total_coal:
+                    print(f"You collected all coal! ({ps1}, {ps2})")
+                    break
+            elif matrix[ps1][ps2] == "e":
+                Game_Over = True
+                break
+
+    elif move == "down":
+        if move_down(matrix, miner):
+            miner = [int(miner[0] + 1), int(miner[1])]
+            ps1, ps2 = miner[0], miner[1]
+            if matrix[ps1][ps2] == "c":
+                collected_coal += 1
+                matrix[ps1][ps2] = "*"
+                if collected_coal == total_coal:
+                    print(f"You collected all coal! ({ps1}, {ps2})")
+                    break
+            elif matrix[ps1][ps2] == "e":
+                Game_Over = True
+                break
+
+    elif move == "left":
+        if move_left(matrix, miner):
+            miner = [int(miner[0]), int(miner[1] - 1)]
+            ps1, ps2 = miner[0], miner[1]
+            if matrix[ps1][ps2] == "c":
+                collected_coal += 1
+                matrix[ps1][ps2] = "*"
+                if collected_coal == total_coal:
+                    print(f"You collected all coal! ({ps1}, {ps2})")
+                    break
+            elif matrix[ps1][ps2] == "e":
+                Game_Over = True
+                break
+
+    elif move == "right":
+        if move_right(matrix, miner):
+            miner = [int(miner[0]), int(miner[1] + 1)]
+            ps1, ps2 = miner[0], miner[1]
+            if matrix[ps1][ps2] == "c":
+                collected_coal += 1
+                matrix[ps1][ps2] = "*"
+                if collected_coal == total_coal:
+                    print(f"You collected all coal! ({ps1}, {ps2})")
+                    break
+            elif matrix[ps1][ps2] == "e":
+                Game_Over = True
+                break
+
+
+
+coals_left = total_coal - collected_coal
+if coals_left > 0 and not Game_Over:
+    print(f"{coals_left} pieces of coal left. ({miner[0]}, {miner[1]})")
+
+if Game_Over:
+    print(f"Game over! ({ps1}, {ps2})")

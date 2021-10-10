@@ -1,15 +1,30 @@
-# 05. Primary Diagonal:
+# 06. Symbol in Matrix:
+rows = int(input())
+columns = rows
 
-size = int(input())
-matrix = [[0] * size for row in range(0, size)]
+matrix = []
+symbol_has_been_found = False
+symbol_location = None
 
-for x in range(0, size):
-    line = list(map(int, input().split()))
-    for y in range(0, size):
-        matrix[x][y] = line[y]
+for i in range(rows):
+    line = [x for x in input()]
+    matrix.append(line)
 
-sum_diagonal = 0
-for i in range(size):
-    sum_diagonal += matrix[size - i - 1][size - i - 1]
-print(sum_diagonal)
+symbol = input()
+
+for row in range(rows):
+    for column in range(columns):
+        current_cell = matrix[row][column]
+        if current_cell == symbol:
+            symbol_has_been_found = True
+            symbol_location = [row, column]
+        if symbol_has_been_found:
+            break
+
+if symbol_has_been_found:
+    print(f"({symbol_location[0]}, {symbol_location[1]})")
+else:
+    print(f"{symbol} does not occur in the matrix")
+
+
 
