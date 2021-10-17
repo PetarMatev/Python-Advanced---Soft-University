@@ -1,4 +1,5 @@
 # 04. Easter Bunny:
+
 n = int(input())
 matrix = [[x for x in input().split(" ")] for i in range(n)]
 bunny = [[row, column] for column in range(n) for row in range(n) if matrix[row][column] == "B"]
