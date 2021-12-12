@@ -1,24 +1,21 @@
-# 05. Word Count:
-# Write a program that reads a list of words from the file words.txt and finds how many times
-# each of the words is contained in another file text.txt. Matching should be case-insensitive.
-# The results should be written to another text files. Sort the words by frequency in descending order.
+# 02. Line Numbers:
+import string
+from os import path
 
-words = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\words.txt', 'w')
-words.write("quick is fault")
-words.close()
+file_path = path.relpath("D:\\03. Python\\03. Python Advanced\\14. Exercise File Handling\\Even Lines.txt")
+updated_text = []
+with open(file_path, 'r') as file:
+    counter = 1
+    for line in file:
+        line = line.replace("\n", "")
+        letters = len([i for i in line if i.isalpha()])
+        punctuations = len([i for i in line if not i.isalpha() and i != " "])
+        updated_text.append(f"Line {counter}: {line} ({letters}) ({punctuations})")
+        counter += 1
 
-input = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\input.txt', 'w')
-input.write(f"-I was quick to judge him, but it wasn't his fault."
-            f"\n-Is this some kind of joke?! Is it?"
-            f"\n-Quick, hide here…It is safer.")
-input.close()
+file_path_to_write = path.relpath("D:\\03. Python\\03. Python Advanced\\14. Exercise File Handling\\Line_Numbers.txt")
+with open(file_path_to_write, 'w') as file:
+    for line in updated_text:
+        file.write(f"{line}\n")
 
-words = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\words.txt', 'r')
-input = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\input.txt', 'r')
 
-searched_words = [i for i in str(*words).split()]
-input_list = []
-for line in str(*input):
-    input_list.append(line)
-
-print(input_list)

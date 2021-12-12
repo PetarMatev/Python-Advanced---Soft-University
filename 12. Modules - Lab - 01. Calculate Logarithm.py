@@ -1,3 +1,9 @@
-from termcolor import colored
-text = colored("Hello World", "red", attrs=['bold', 'underline'])
-print(text)
+# 1. Calculate Logarithm:
+from math import log
+number = int(input())
+base = input()
+
+if base == "natural":
+    print(f"{log(number):.2f}")
+else:
+    print(f"{log(number,int(base)):.2f}")

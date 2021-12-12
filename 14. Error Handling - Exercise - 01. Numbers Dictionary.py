@@ -1,12 +1,32 @@
-# 03. ValueCannotBeNegative:
-class Error(Exception):
-    pass
+# 01. Numbers Dictionary:
 
+numbers_dictionary = {}
 
-class ValueCannotBeNegative(Error):
-    """Raised when the input value is too small"""
+line = input()
+while line != "Search":
+    number_as_string = line
+    try:
+        number = int(input())
+        numbers_dictionary[number_as_string] = number
+    except ValueError:
+        print("The variable number must be an integer")
+    line = input()
 
+line = input()
 
-num = int(input())
-if num < 0:
-    raise ValueCannotBeNegative
+while line != "Remove":
+    searched = line
+    print(numbers_dictionary[searched])
+    line = input()
+
+line = input()
+
+while line != "End":
+    searched = line
+    try:
+        del numbers_dictionary[searched]
+    except KeyError:
+        print("Number does not exist in dictionary")
+    line = input()
+
+print(numbers_dictionary)

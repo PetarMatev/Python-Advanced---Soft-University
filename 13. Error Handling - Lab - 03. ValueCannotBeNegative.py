@@ -1,6 +1,7 @@
-# 01. So Many Exceptions:
+# 03. ValueCannotBeNegative:
 class Error(Exception):
     pass
+
 
 class ValueCannotBeNegative(Error):
     """Raised when the input value is too small"""
@@ -9,5 +10,3 @@ class ValueCannotBeNegative(Error):
 num = int(input())
 if num < 0:
     raise ValueCannotBeNegative
-
-

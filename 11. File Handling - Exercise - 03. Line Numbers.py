@@ -1,24 +1,53 @@
-# 05. Word Count:
-# Write a program that reads a list of words from the file words.txt and finds how many times
-# each of the words is contained in another file text.txt. Matching should be case-insensitive.
-# The results should be written to another text files. Sort the words by frequency in descending order.
+# 03. File Manipulator:
+from os import path
+import os
+import fileinput
+import sys
 
-words = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\words.txt', 'w')
-words.write("quick is fault")
-words.close()
+file_path = path.relpath("D:\\03. Python\\03. Python Advanced\\14. Exercise File Handling")
 
-input = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\input.txt', 'w')
-input.write(f"-I was quick to judge him, but it wasn't his fault."
-            f"\n-Is this some kind of joke?! Is it?"
-            f"\n-Quick, hide here…It is safer.")
-input.close()
+while True:
+    command = input()
+    if command == "End":
+        break
+    instruction = command.split("-")
+    if instruction[0] == "Create":
+        Create_Fine_Name = instruction[1]
+        directory = f"{file_path}\\{Create_Fine_Name}"
+        with open(directory, 'w') as file:
+            file.write("")
 
-words = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\words.txt', 'r')
-input = open('D:\\03. Python\\03. Python Advanced\\13. File Handling\\input.txt', 'r')
+    elif instruction[0] == "Add":
+        Add_Fine_Name = instruction[1]
+        content = instruction[2]
+        directory = f"{file_path}\\{Add_Fine_Name}"
+        with open(directory, 'a') as file:
+            content_to_append = f"{content}\n"
+            file.write(content_to_append)
 
-searched_words = [i for i in str(*words).split()]
-input_list = []
-for line in str(*input):
-    input_list.append(line)
+    elif instruction[0] == "Replace":
+        Replace_Fine_Name = instruction[1]
+        old_string = instruction[2]
+        new_string = instruction[3]
+        directory = f"{file_path}\\{Replace_Fine_Name}"
+        if os.path.exists(directory):
+            with open(directory, 'r') as file:
+                list_of_lines = file.readlines()
 
-print(input_list)
+                for index, line in enumerate(list_of_lines):
+                    if old_string in line:
+                        line = line.replace(old_string, new_string)
+                        list_of_lines[index] = line
+
+                with open(directory, 'w') as file:
+                    file.writelines(list_of_lines)
+        else:
+            print(f"An error occurred")
+
+    elif instruction[0] == "Delete":
+        Delete_Fine_Name = instruction[1]
+        directory = f"{file_path}\\{Delete_Fine_Name}"
+        if os.path.exists(directory):
+            os.remove(directory)
+        else:
+            print(f"An error occurred")
